@@ -10,7 +10,7 @@ for i=1:len
    z(i+1) = z(i) + (x(i)-z(i)*2^(1/2) - y(i) )*t;
    y(i+1) = y(i) + z(i)*t;
 end
-plot(0:t*50:len*t - t*50,x(1:50:len));
+plot(0:t*50:len*t,x);
 plot(0:t*50:len*t - t*50,y(1:50:len));
 hold on
 %цифра
@@ -27,7 +27,7 @@ for i=3:len
  y(i) = (1/C) *(x(i-2) + 2*x(i-1) + x(i) - B*y(i-1) - A*y(i-2));
 end
 plot(0:t:len*t - t,y);
-legend('Unfilter signal','Analog filter','Digital filter');
+legend('Analog filter','Digital filter');
 figure
 %аналоговая 
 freqs(1,[1,sqrt(2),2])
