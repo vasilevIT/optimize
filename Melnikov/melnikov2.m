@@ -27,6 +27,8 @@ for i=3:len
  y(i) = (1/C) *(x(i-2) + 2*x(i-1) + x(i) - B*y(i-1) - A*y(i-2));
 end
 plot(0:t:len*t - t,y);
+xlabel('t,сек');
+ylabel('x');
 legend('Unfilter signal','Analog filter','Digital filter');
 figure
 %аналоговая 
