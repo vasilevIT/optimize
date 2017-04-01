@@ -1,8 +1,8 @@
 % 3 work
 clc, clear all
 %read signal
-d = sin(5*(0:pi/180:4))';%wavread('limp.wav',200000);
-
+d = wavread('placebo.wav',100000);
+d = d(:,1);
 N = size(d,1);
 g = 0.005;
 %sound(d,46000);
@@ -14,47 +14,53 @@ y = [];
 
 %changes
 %plot(abs(fft(d)));
-for i = M+1:N
+for i = 1:N
    y(i) = 0;
    for j = 1:M
-       y(i) = y(i) + h(j)*d(i-j);
+       if ((i-j)>0)
+          y(i) = y(i) + h(j)*d(i-j)*20;
+       else
+          y(i) = y(i) + 0; 
+       end
    end
 end
 
 %generated noize
 z=[];
-for i = M+1:N
+for i = 1:N
    z(i) = y(i) + randn()*g;
 end
-z = [1,2,3,4,5,6,7];
-N=7;
-M=6;
+%z = [1,2,3,4,5,6,7];
+%N=7;
+M=5;
 %build V matrix
 V = [];
 q = floor(M/2);
-for i = 1:(M+1)
-    
-    k = 1;
-    if (i>q)
-      k = i-q;
-    end
-    for j = 1:N
-        %zeros  
-            if (ceil((j+i)/2)<=q)
-                V(j,i) =  0;
-            else
-                if (k<=N)
-                 V(j,i) =  z(k);
-                 k = k + 1;
-                else
-                 V(j,i) =  0;
-                end
-                    
-            end
-    end
+smesh = -q+1;
+for i = 1:N
+    k = smesh;
+   for j = 1:M
+       if (k<1)
+           V(i,j) = 0;
+       else
+           if (k>N)
+            V(i,j) = 0;
+           else
+            V(i,j) = z(k);
+           end
+       end
+       k = k + 1;
+   end
+   smesh = smesh + 1;
 end
-
+Vt = V';
+u0 = inv(Vt*V);
+u2 = u0(:,1:5) *Vt;
+u = u2*d;
+x = V*u;
 %hold on;
 %plot(abs(fft(z)));
-%sound(z,46000);
+sound(x ,32000);
+
+% строим частотные характеристики и спектральную плотность сигнала
 
