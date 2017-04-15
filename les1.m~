@@ -1,0 +1,11 @@
+an=0;
+bn=2;
+e=0.001;
+while(abs(bn-an)>2*e)
+   c=(bn-an)/2;
+   if ((4*(1-pow(an,2))-pow(epx(an)))*((4*(1-c*c)-epx(c)))<0))
+       bn=c;
+   else
+       an=c;
+   end
+end
