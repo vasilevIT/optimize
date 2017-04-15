@@ -1,0 +1,17 @@
+function x=roots2(P)
+    
+    %производная
+    proizv =polyder(P);
+    k=1;
+    n=1;
+    y = [];
+       fprintf('корень: %g \n',k);
+    for i = -100:0.1:100
+        y(n) = proizv(1)*i + proizv(2);
+        if ( (round(y(n)*100)/100) == 0)
+            x(k) = i
+            fprintf('корень: %g \n',i);
+            k = k+1;
+        end
+        n = n+1;
+    end

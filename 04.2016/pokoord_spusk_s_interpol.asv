@@ -1,0 +1,29 @@
+%% ћетод циклического покоординатного спуска с параболической интерпол€цией
+clc,clear all
+a:mas; 
+y,h,e=0.0;
+l=0.0;
+b=0.0;
+c=0.0; i,n:integer;
+begin 
+clear;
+ n:=2;
+ writeln('введите начальный шаг поиска'); readln(h);
+writeln('введите точность '); readln(e);
+for i:=1 to n do begin
+write('введите начальные x',i,'=');
+readln(a[i]); end;
+l:=h;
+1: for i:=1 to n do begin b:=0.9E38;
+2: a[i]:=a[i]+h;
+y:=f2(a[1],a[2]);
+c:=b; b:=y;
+if y-c<0 then goto 2;
+h:=-h/3;
+if abs(h)>=abs(l/3) then goto 2;
+h:=l; end;
+l:=l/9; h:=l;
+if e/9<=l then goto 1;
+writeln('fmin=',y:4:10);
+for i:=1 to n do
+writeln('x',i,'min=',a[i]:4:10); end;

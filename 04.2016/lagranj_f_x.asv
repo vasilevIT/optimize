@@ -1,0 +1,9 @@
+function y=lagranj_f_x(x)
+P=lagranj(x,f_x);
+xx=2;
+P_x=0;
+w=length(P);
+for i=1:w
+    P_x=P_x + xx^(w-i) * P(i);
+end
+disp(P_x);
