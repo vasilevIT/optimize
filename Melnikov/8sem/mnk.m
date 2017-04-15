@@ -23,9 +23,6 @@ for i = 1:N
     k = k + h;
     
 end
-plot(x,y1);
-hold on
-plot(x,y)
 
 %—Å—Ç—Ä–æ–∏–º –º–∞—Ç—Ä–∏—Ü—É X –∏ —Å—Ç–æ–ª–±–µ—Ü Y
 X = zeros(N,4);
@@ -39,7 +36,11 @@ for i = 1:N
 end
 Y = Y';
 %–ú–ù–ö
+
+tic
 B = inv(X'*X)*X'*Y;
+t(1) = toc;
+tic
 [Q,R] = qr(X);
 QY = (Q'*Y);
 QY = QY(1:4);
@@ -55,6 +56,8 @@ for i = 1:m
    end
    B_QR(k) = (temp)/R(k,k);
 end
+
+t(2) = toc;
 %–∏–ª–∏ –±–µ–∑ —Ü–∏–∫–ª–∞
 %{
 B_QR_HAND(4) = QY(4)/R(4,4);
@@ -63,11 +66,13 @@ B_QR_HAND(2) = (QY(2) - R(2,4)*B_QR_HAND(4) - R(2,3)*B_QR_HAND(3))/R(2,2);
 B_QR_HAND(1) = (QY(1) - R(1,4)*B_QR_HAND(4) - R(1,3)*B_QR_HAND(3) - R(1,2)*B_QR_HAND(2))/R(1,1);
 %}
 % —Ä–µ—à–∞–µ–º —Å –ø–æ–º–æ—â—å—é SVD
-[U,S,V] = svd(X);
+tic
+[U,S,V] = svd(X,0);
 X_SVD = U*S*V';
 UY = U'*Y;
 B_SVD = V*inv(S(1:4,1:4))*UY(1:4);
 
+t(3) = toc;
 k = 0;
 myF2=@(x)(B_QR(1) + B_QR(2)*x + B_QR(3)*x^2 + B_QR(4)*x^3);
 for i = 1:N
@@ -76,6 +81,15 @@ for i = 1:N
     k = k + h;
     
 end
-hold on
-plot(x2,y2)
 
+plot(x,y1,x,y,x2,y2);
+
+legend('Û…«Œ¡Ã','Û…«Œ¡Ã+€’Õ','œ”Ã≈ ÌÓÎ');
+fprintf('Ù≈“ÕŸ:  È”». | ÌÓÎ  |  QR  | SVD\n');
+for i=1:4
+fprintf('b(%d)     %.2f | %.2f | %.2f | %.2f\n',i,b(i),B(i),B_QR(i),B_SVD(i)); 
+end
+t = t.*1000;
+fprintf('˜“≈Õ— “¡”ﬁ≈‘¡(msec): ÌÓÎ |  QR  | SVD\n');
+fprintf('                    %.2f | %.2f | %.2f\n',t(1),t(2),t(3));
+ 
