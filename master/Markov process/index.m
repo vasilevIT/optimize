@@ -8,6 +8,7 @@
 
 clc;
 clear;
+% variant ?6
 % graph
 X = [];
 X(0 + 1,1 + 1) = 7;
