@@ -75,9 +75,8 @@ for i = 1:size_array(1)
 end
 X_imitation = round(X_imitation,4);
 
-times = zeros(1,10);
+times = [zeros(1,10)];
 n = 10;
-% Puasson in begin
 P_step = abs(rand(1,n));
 current_state = 1; % init state
 for current_t = 1:n
